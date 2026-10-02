@@ -7,12 +7,13 @@ type Props = {
   pendingByHoja: Map<number, number>
   onOpen: (hojaId: number) => void
   linkRows?: boolean
+  maxVisible?: number
 }
 
 type SortKey = 'registro' | 'emision' | 'ruta' | 'estado'
 type SortDir = 'asc' | 'desc'
 
-export default function HojaTable({ hojas, pendingByHoja, onOpen, linkRows = false }: Props) {
+export default function HojaTable({ hojas, pendingByHoja, onOpen, linkRows = false, maxVisible }: Props) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir } | null>(null)
 
   const ordenar = (key: SortKey) => {
@@ -33,7 +34,7 @@ export default function HojaTable({ hojas, pendingByHoja, onOpen, linkRows = fal
   }
 
   return (
-    <div className="table-wrap">
+    <div className={`table-wrap${maxVisible && hojas.length > maxVisible ? ' hojas-scroll' : ''}`}>
       <table>
         <thead>
           <tr>

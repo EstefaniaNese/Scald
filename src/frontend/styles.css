@@ -108,6 +108,7 @@ h1, h2, p { margin: 0; }
 .incidencias-table tbody td:first-child { padding-left: 20px; }
 .incidencias-table tbody td:last-child { padding-right: 20px; }
 .page-heading, .detail-head, .title-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.detail-head .title-row { justify-content: flex-start; gap: 10px; }
 .page-heading, .detail-head { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 18px 20px; }
 .import-action { display: grid; justify-items: end; gap: 8px; }
 .import-action .notice, .import-action .form-error { margin: 0; max-width: 320px; text-align: right; }
@@ -115,6 +116,11 @@ h1 { font-size: 32px; letter-spacing: -0.04em; }
 .detail-head { align-items: start; }
 .detail-head p { color: #4b5160; margin-top: 6px; }
 .meta { color: var(--muted); font-size: 14px; }
+.sheet-facts { display: flex; flex-wrap: wrap; gap: 10px 0; margin: 14px 0 0; }
+.sheet-facts div { display: grid; gap: 2px; min-width: 108px; padding-right: 16px; margin-right: 16px; border-right: 1px solid var(--line); }
+.sheet-facts div:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.sheet-facts dt { color: var(--muted); font-size: 12px; font-weight: 600; }
+.sheet-facts dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .detail-stats { display: flex; gap: 28px; text-align: right; }
 .detail-stats strong { display: block; font-size: 28px; letter-spacing: -0.04em; }
 .detail-stats span { color: var(--muted); font-size: 13px; }
@@ -178,6 +184,45 @@ h1 { font-size: 32px; letter-spacing: -0.04em; }
 .card-header { padding: 16px 18px 0; }
 .card-header input { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; min-width: 180px; }
 .table-wrap { overflow: auto; padding: 8px 8px 12px; }
+/* Detalle de hoja: con más de 7 bultos se ven siete filas y el resto se desplaza. */
+.card.bultos-card { overflow: hidden; }
+.table-wrap.bultos-scroll {
+  --bulto-head: 40px;
+  --bulto-row: 52px;
+  max-height: calc(var(--bulto-head) + (6 * var(--bulto-row)));
+  padding-block: 0;
+  overflow: auto;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.bultos-scroll table { border-collapse: separate; border-spacing: 0; }
+.bultos-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: var(--bulto-head);
+  background: var(--paper);
+}
+.bultos-scroll tbody td { height: var(--bulto-row); }
+.card.hojas-card { overflow: hidden; }
+.table-wrap.hojas-scroll {
+  --hoja-head: 40px;
+  --hoja-row: 52px;
+  max-height: calc(var(--hoja-head) + (5 * var(--hoja-row)));
+  padding-block: 0;
+  overflow: auto;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.hojas-scroll table { border-collapse: separate; border-spacing: 0; }
+.hojas-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: var(--hoja-head);
+  background: var(--paper);
+}
+.hojas-scroll tbody td { height: var(--hoja-row); }
 table { width: 100%; border-collapse: collapse; }
 th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 600; padding: 10px 12px; }
 .sort-header { border: 0; background: transparent; color: inherit; font: inherit; font-weight: 600; padding: 0; display: inline-flex; align-items: center; gap: 6px; }

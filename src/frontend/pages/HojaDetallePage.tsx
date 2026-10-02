@@ -176,10 +176,26 @@ export default function HojaDetallePage({ token, hojaId, canEdit, focusPistoleo 
           <div className="title-row">
             <h1>{hoja.codigo}</h1>
             <span className={`badge ${hoja.estado === 'ACTIVA' ? 'ok' : hoja.estado === 'CERRADA' ? 'closed' : 'muted'}`}>{hoja.estado}</span>
-            <button className="button primary" onClick={() => setEditing(true)} type="button">Editar</button>
+            {canEdit && <button className="button primary" onClick={() => setEditing(true)} type="button">Editar</button>}
           </div>
-          <p>Ruta: {formatRoute(hoja.ruta)}</p>
-          <p className="meta">Registro: {formatDate(hoja.fecha_registro)} · Emisión: {formatDate(hoja.fecha)}{hoja.transporte ? ` · Transporte: ${hoja.transporte}` : ''}</p>
+          <dl className="sheet-facts">
+            <div>
+              <dt>Ruta</dt>
+              <dd>{formatRoute(hoja.ruta).trim() || '—'}</dd>
+            </div>
+            <div>
+              <dt>Registro</dt>
+              <dd>{formatDate(hoja.fecha_registro)}</dd>
+            </div>
+            <div>
+              <dt>Emisión</dt>
+              <dd>{formatDate(hoja.fecha)}</dd>
+            </div>
+            <div>
+              <dt>Transporte</dt>
+              <dd>{hoja.transporte?.trim() || '—'}</dd>
+            </div>
+          </dl>
         </div>
         <div className="detail-stats">
           <div><strong>{formatNumber(esperados)}</strong><span>Esperados</span></div>
@@ -203,12 +219,12 @@ export default function HojaDetallePage({ token, hojaId, canEdit, focusPistoleo 
         />
       )}
       <div className="workspace-grid">
-        <section className="card">
+        <section className="card bultos-card">
           <div className="card-header">
             <h2>Bultos: Esperados vs Pistoleados</h2>
             <input aria-label="Buscar bulto" onChange={(event) => setSearch(event.target.value)} placeholder="Buscar bulto..." value={search} />
           </div>
-          <div className="table-wrap">
+          <div className={`table-wrap${propios.length > 7 ? ' bultos-scroll' : ''}`}>
             <table>
               <thead>
                 <tr>

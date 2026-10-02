@@ -61,7 +61,7 @@ export default function DashboardPage({ token, isAdmin, onOpenHoja, onPistoleo, 
   incidencias.filter((item) => item.estado === 'PENDIENTE' && item.hoja_ruta_id).forEach((item) => {
     pendingByHoja.set(item.hoja_ruta_id as number, (pendingByHoja.get(item.hoja_ruta_id as number) ?? 0) + 1)
   })
-  const recientes = [...hojas].sort((a, b) => b.fecha_registro.localeCompare(a.fecha_registro)).slice(0, 5)
+  const recientes = [...hojas].sort((a, b) => b.fecha_registro.localeCompare(a.fecha_registro))
   const bultoPorId = new Map(bultos.map((bulto) => [bulto.id, bulto.codigo]))
   const hojaPorId = new Map(hojas.map((hoja) => [hoja.id, hoja.codigo]))
   const actividadVisible = actividad.length
@@ -121,12 +121,12 @@ export default function DashboardPage({ token, isAdmin, onOpenHoja, onPistoleo, 
         </article>
       </section>
       <div className="workspace-grid">
-        <section className="card">
+        <section className="card hojas-card">
           <div className="card-header">
             <h2>Hojas de Ruta Recientes</h2>
             <button className="text-link" onClick={onVerTodas} type="button">Ver todas</button>
           </div>
-          <HojaTable hojas={recientes} linkRows onOpen={onOpenHoja} pendingByHoja={pendingByHoja} />
+          <HojaTable hojas={recientes} linkRows maxVisible={5} onOpen={onOpenHoja} pendingByHoja={pendingByHoja} />
         </section>
         <div className="side-stack">
           <section className="card">
